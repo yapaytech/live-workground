@@ -1,0 +1,95 @@
+<html>
+<!-- 
+  mac open code:
+  open -a Google\ Chrome --args --disable-web-security --user-data-dir
+
+  pc open code:
+
+-->
+<head>
+  <title>Getting Started</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body,
+    html {
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+  <script>
+    "use strict";
+    var insertParamToUrl = function (a, b, c) {
+      c || (c = window.location.href);
+      var e, d = new RegExp("([?&])" + a + "=.*?(&|#|$)(.*)", "gi");
+      if (d.test(c)) return "undefined" != typeof b && null !== b ? c.replace(d, "$1" + a + "=" + b + "$2$3") : (e =
+        c.split("#"), c = e[0].replace(d, "$1$3").replace(/(&|\?)$/, ""), "undefined" != typeof e[1] && null !==
+        e[1] && (c += "#" + e[1]), c);
+      if ("undefined" != typeof b && null !== b) {
+        var f = -1 === c.indexOf("?") ? "?" : "&";
+        e = c.split("#"), c = e[0] + f + a + "=" + b, "undefined" != typeof e[1] && null !== e[1] && (c += "#" + e[1])
+      }
+      return c
+    };
+  </script>
+</head>
+
+<body>
+  <a class="btn btn-info btn-raised" style="z-index:999;position: absolute;top:0;left:0;" onclick="localStorage.setItem('maytapChatUser','{}');localStorage.setItem('chatLastState','{}');history.replaceState(history.state, document.title, insertParamToUrl('join',''));location.reload();">RESET</a>
+
+  <script>
+    const getParameterByName = function (name, url) {
+      if (!url) {
+        url = window.location.href;
+      }
+      name = name.replace(/[\[\]]/g, "\\$&");
+      var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+      if (!results) return null;
+      if (!results[2]) return '';
+      return decodeURIComponent(results[2].replace(/\+/g, " "));
+    };
+    var url = getParameterByName('url');
+    document.write(
+      `<iframe id="ifr" src="${url}" style="width:100%;height:100%;display:none;" frameborder="0"></iframe>`)
+  </script>
+  <script>
+    var frame = document.getElementById('ifr');
+    window.dahiTarget = frame.contentWindow;
+  </script>
+  <script type="text/javascript">
+    //$('#__load,#dahiWrap,#maytapChat').remove();window.maytapChat = window.dahiNotify = undefined;
+    $('#ifr').on('load', () => {
+      console.log("<<START>>")
+      $(window.dahiTarget.document).on('click', 'a', function (e) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        var el = $(this);
+        var href = el.attr('href');
+        console.log(href);
+        if (href === 'javascript:;') return;
+        if (!/^http/.test(href)) href = window.dahiTarget.location.origin + href;
+        window.location = `http://localhost:8080/?url=${href}`;
+      });
+      $('#ifr').show();
+      window.maytapChat || (function (a, b, c) {
+        var e, f = a.getElementsByTagName(b)[0];
+        a.getElementById(c) || (e = a.createElement(b), e.id = c, e.src =
+          '//live.maytap.me/widget/3b3d9103c5a9164a731c59ed366dd5e6', e.onload = function () {
+            new maytapChat().widget({ pid : "3737ae1d5159873103702efc8a544650",
+              force: true,
+                chatstyle: 'int',
+              widgetType: 'toggle',
+              anon:true,
+              dll: ['/dll/asd.js']
+            })
+          }, f.parentNode.insertBefore(e, f))
+      })(document, 'script', 'maytapChat');
+    })
+  </script>
+</body>
+
+</html>
