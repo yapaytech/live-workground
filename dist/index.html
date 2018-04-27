@@ -75,7 +75,7 @@
         console.log(href);
         if (href === 'javascript:;') return;
         if (!/^http/.test(href)) href = window.dahiTarget.location.origin + href;
-        window.location = `/?url=${href}`;
+        window.location = `http://localhost:9000/?url=${href}`;
       });
       $('#ifr').show();
       window.maytapChat || (function (a, b, c) {
