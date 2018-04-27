@@ -3,6 +3,9 @@
   mac open code:
   open -a Google\ Chrome --args --disable-web-security --user-data-dir
 
+  ubuntu open code:
+  chromium-browser --disable-web-security --user-data-dir
+
   pc open code:
 
 -->
@@ -72,7 +75,7 @@
         console.log(href);
         if (href === 'javascript:;') return;
         if (!/^http/.test(href)) href = window.dahiTarget.location.origin + href;
-        window.location = `http://localhost:8080/?url=${href}`;
+        window.location = `/?url=${href}`;
       });
       $('#ifr').show();
       window.maytapChat || (function (a, b, c) {
