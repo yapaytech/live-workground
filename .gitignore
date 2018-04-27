@@ -59,6 +59,4 @@ typings/
 .env
 
 package-lock.json
-dist/**/*.js
 temp
-examples/*.js
